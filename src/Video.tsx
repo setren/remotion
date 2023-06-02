@@ -1,4 +1,4 @@
-import {Composition} from 'remotion';
+import {Composition, Img} from 'remotion';
 import {AbsoluteFill, Sequence, useCurrentFrame} from 'remotion';
 
 export default function Video() {
@@ -20,6 +20,39 @@ export default function Video() {
 	);
 }
 
+function Workspace({question, answer}: any) {
+	return (
+		<AbsoluteFill
+			style={{
+				background:
+					'linear-gradient(to left bottom, #4dd0b1, #00c3e4, #00a9ff, #8b7aff, #eb12aa)',
+				color: 'white',
+			}}
+		>
+			<Sequence durationInFrames={100}>
+				<Logo />
+			</Sequence>
+			<Sequence
+				durationInFrames={question.length * 3 + 60}
+				style={{padding: 50}}
+			>
+				<Typewritter text={question} />
+			</Sequence>
+			<Sequence
+				durationInFrames={answer.length * 3 + 60}
+				from={question.length * 3 + 60}
+				style={{padding: 50}}
+			>
+				<Typewritter text={answer} />
+			</Sequence>
+		</AbsoluteFill>
+	);
+}
+
+function Logo() {
+	return <Img src="https://picsum.photos/id/237/200/300" />;
+}
+
 function Typewritter({text}: any) {
 	const frame = useCurrentFrame();
 	// A new character every 3 frames
@@ -34,8 +67,8 @@ function Typewritter({text}: any) {
 			style={{
 				fontFamily: 'sans-serif',
 				fontSize: 50,
-        marginTop: -10,
-        marginBottom: -10,
+				marginTop: -10,
+				marginBottom: -10,
 			}}
 		>
 			{textToShow}
@@ -52,31 +85,5 @@ function Typewritter({text}: any) {
 				}}
 			/>
 		</p>
-	);
-}
-
-function Workspace({question, answer}: any) {
-	return (
-		<AbsoluteFill
-			style={{
-				background:
-					'linear-gradient(to left bottom, #4dd0b1, #00c3e4, #00a9ff, #8b7aff, #eb12aa)',
-				color: 'white',
-			}}
-		>
-			<Sequence
-				durationInFrames={question.length * 3 + 60}
-				style={{padding: 50}}
-			>
-				<Typewritter text={question} />
-			</Sequence>
-			<Sequence
-				durationInFrames={answer.length * 3 + 60}
-				from={question.length * 3 + 60}
-				style={{padding: 50}}
-			>
-				<Typewritter text={answer} />
-			</Sequence>
-		</AbsoluteFill>
 	);
 }
